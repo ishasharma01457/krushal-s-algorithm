@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kruskal's Algorithm</title>
+</head>
+<body>
+    <h2>Kruskal's Algorithm</h2>
+
+ <script>
+        var V = 5;
+        var par = Array(V).fill(0);
+        var INF = 1000000;
+
+        function find(x){
+	        while (par[x] != x)
+		    x = par[x];
+	        return x;
+        }
+
+        function union(x, j){
+	        var a = find(x);
+	        var b = find(j);
+	        par[a] = b;
+        }
+
+        function kruskal(cost){
+	        var mincost = 0;
+	        for (var x = 0; x < V; x++)
+		        par[x] = x;
+
+	        var edge = 0;
+	        while (edge < V - 1){
+		        var min = INF, a = -1, b = -1;
+		        for (var x = 0; x < V; x++){
+			        for (var j = 0; j < V; j++){
+				        if (find(x) != find(j) && cost[x][j] < min){
+					        min = cost[x][j];
+					        a = x;
+					        b = j;
+				        }
+			        }
+		        }
+
+		        union(a, b);
+                console.log(`Edge ${edge++}:(${a},${b}) cost:${min}`);
+		        mincost += min;
+	        }
+	        console.log(`Minimum cost= ${mincost}`);
+        }
+
+        var cost = [
+	        [INF    , 1, INF, 5, INF],
+	        [1, INF, 5, 9, 4],
+	        [INF, 5, INF, INF, 7],
+	        [6, 9, INF, INF, 3],
+	        [INF, 4, 8, 5, INF]];
+        kruskal(cost);
+    </script>
+</body>
+</html>
+
